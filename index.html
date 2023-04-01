@@ -1,0 +1,129 @@
+
+<!DOCTYPE html>
+<html>
+<style>
+/* Center the heading */
+h1 {
+  text-align: center;
+}
+
+/* Style the label */
+label {
+  font-weight: bold;
+}
+
+/* Style the input */
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Style the button */
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Add margin to the copy button */
+#copy-button {
+  margin-top: 20px;
+}
+
+/* Style the config list div */
+#config-list {
+  background-color: #f2f2f2;
+  padding: 10px;
+  border-radius: 1px;
+  min-height: 100px;
+}
+</style>
+<head>
+    <meta charset="UTF-8" />
+    <title>V2ray ip Changer</title>
+    <h1>V2ray ip Changer</h1><br><br>
+</head>
+<body>
+    <label>Enter your Config:</label><br><br>
+    <input type="text" id="Vless" value="Vless" onfocus="if(this.value=='Vless') this.value='';"><br><br>
+    <input type="text" id="Trojan" value="Trojan" onfocus="if(this.value=='Trojan') this.value='';"><br><br>
+    <input type="text" id="GRPC" value="GRPC" onfocus="if(this.value=='GRPC') this.value='';"><br><br>
+    <button type="button" id="but">Build</button><br><br>
+    <div id="config-list"></div><br>
+    <button id="copy-button" onclick="CopyFunction()">Copy All</button>
+    <script>
+        const ops = {
+            Irancel1 : "mtn.ircf.space",
+            Rightel :"rtl.ircf.space",
+            Irancel2 : "mtnx.ircf.space",
+            Hamrah1 : "mci.ircf.space",
+            MobinNet : "mbt.ircf.space",
+            Hamrah2 : "mcix.ircf.space",
+            Mokhaberat : "mkh.ircf.space",
+            zitel: "ztl.ircf.space"
+        }
+        let Names = Object.keys(ops);
+        let ips = Object.values(ops);
+
+      document.getElementById("but").onclick = function(){
+        let Vless = document.getElementById("Vless").value;
+        let Trojan = document.getElementById("Trojan").value;
+        let GRPC = document.getElementById("GRPC").value;
+        let vle = Vless.split(":")
+        let tr = Trojan.split(":")
+        let gr = GRPC.split(":")
+        let Raw1 = Vless.split("#")[0];
+        let Raw11 = Raw1.split("?")[0];
+        let Raw111 = Raw1.split("?")[1];
+        let Raw1111 = Raw111.split("&");
+        let Raw2 = Trojan.split("#")[0];
+        let Raw22 =  Raw2.split("?")[0];
+        let Raw222 = Raw2.split("?")[1];
+        let Raw2222 = Raw222.split("&");
+        let Raw3 = GRPC.split("#")[0];
+        let Raw33 = Raw3.split("?")[0];
+        let Raw333 = Raw3.split("?")[1];
+        let Raw3333 = Raw333.split("&");
+
+            let Configs1 = [];
+            ips.forEach((ip, index) => {
+                let name = Names[index];   
+                let NewConfig1 = `${Raw11.split("@")[0]}@${ip}:${Raw11.split(":")[2]}?encryption=none&${Raw1111[1]}&${Raw1111[3]}&alpn=h2%2Chttp%2F1.1&${Raw1111[4]}&${Raw1111[0]}&host=${Raw1111[3].split("=")[1]}&${Raw1111[2]}#${Vless.split("#")[1]}-${name}`;
+                Configs1.push(NewConfig1);
+            });
+            let configList = document.getElementById("config-list");
+
+
+    
+            let Configs2 = [];
+            ips.forEach((ip, index) => {
+                let name = Names[index];   
+                let NewConfig2 = `${Raw22.split("@")[0]}@${ip}:${Raw22.split(":")[2]}?${Raw2222[1]}&${Raw2222[3]}&alpn=h2%2Chttp%2F1.1&${Raw1111[4]}&${Raw2222[0]}&host=${Raw2222[3].split("=")[1]}&${Raw2222[2]}#${Trojan.split("#")[1]}-${name}`;
+                Configs2.push(NewConfig2);
+            });
+
+            let Configs3 = [];
+            ips.forEach((ip, index) => {
+                let name = Names[index];   
+                let NewConfig3 = `${Raw33.split("@")[0]}@${ip}:${Raw33.split(":")[2]}?encryption=none&${Raw3333[1]}&${Raw3333[3]}&alpn=h2&${Raw3333[4]}&${Raw3333[0]}&serviceName=${Raw3333[3].split("=")[1]}&mode=gun#${GRPC.split("#")[1]}-${name}`;
+                Configs3.push(NewConfig3);
+            });
+
+                configList.innerHTML = Configs1.join("<br>") + "<br>" + Configs2.join("<br>") + "<br>" + Configs3.join("<br>");
+        }
+    
+      function CopyFunction() {
+        let Text = document.getElementById("config-list");
+        let ptxt = Text.innerText
+        navigator.clipboard.writeText(ptxt);
+      }
+    
+    </script>
+</body>
+</html>
